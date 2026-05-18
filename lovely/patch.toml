@@ -1,0 +1,78 @@
+[manifest]
+version = "1.0.0"
+
+# ─── engine/text.lua — inject RTL display_string ─────────────────────────────
+
+# 1. After computing old_string, compute RTL-processed display_string
+[[patch]]
+[patch.pattern]
+target = "engine/text.lua"
+pattern = "local old_string = self.strings[k].string"
+position = "after"
+payload = "            local display_string = HebrewBalatro_localize_display_text and HebrewBalatro_localize_display_text(new_string, G.LANG) or new_string"
+
+# 2. Compare against display_string instead of new_string
+[[patch]]
+[patch.pattern]
+target = "engine/text.lua"
+pattern = "if old_string ~= new_string or first_pass then"
+position = "at"
+payload = "            if old_string ~= display_string or first_pass then"
+
+# 3. Store display_string (processed) not raw new_string
+[[patch]]
+[patch.pattern]
+target = "engine/text.lua"
+pattern = "self.strings[k].string = new_string"
+position = "at"
+payload = "                self.strings[k].string = display_string"
+
+# 4a. Native text path: render display_string
+[[patch]]
+[patch.pattern]
+target = "engine/text.lua"
+pattern = "local let_tab = {letter = love.graphics.newText(self.font.FONT, new_string), char = new_string,"
+position = "at"
+payload = "                    local let_tab = {letter = love.graphics.newText(self.font.FONT, display_string), char = display_string,"
+
+# 4b. Native text: width using display_string
+[[patch]]
+[patch.pattern]
+target = "engine/text.lua"
+pattern = "local tx = self.font.FONT:getWidth(new_string)*self.scale*part_scale*G.TILESCALE*self.font.FONTSCALE"
+position = "at"
+payload = "                    local tx = self.font.FONT:getWidth(display_string)*self.scale*part_scale*G.TILESCALE*self.font.FONTSCALE"
+
+# 4c. Native text: height using display_string
+[[patch]]
+[patch.pattern]
+target = "engine/text.lua"
+pattern = "local ty = self.font.FONT:getHeight(new_string)*self.scale*part_scale*G.TILESCALE*self.font.FONTSCALE*self.font.TEXT_HEIGHT_SCALE"
+position = "at"
+payload = "                    local ty = self.font.FONT:getHeight(display_string)*self.scale*part_scale*G.TILESCALE*self.font.FONTSCALE*self.font.TEXT_HEIGHT_SCALE"
+
+# 5. Character-by-character loop: iterate display_string
+[[patch]]
+[patch.pattern]
+target = "engine/text.lua"
+pattern = "for _, c in utf8.chars(new_string) do"
+position = "at"
+payload = "                for _, c in utf8.chars(display_string) do"
+
+# ─── functions/UI_definitions.lua — money display uses RTL font ───────────────
+
+[[patch]]
+[patch.pattern]
+target = "functions/UI_definitions.lua"
+pattern = "font = G.LANGUAGES['en-us'].font, shadow = true,spacing = 2, bump = true, scale = 2.2*scale}), id = 'dollar_text_UI'"
+position = "at"
+payload = "                      font = (G.LANG and G.LANG.rtl) and G.LANG.font or G.LANGUAGES['en-us'].font, shadow = true,spacing = 2, bump = true, scale = 2.2*scale}), id = 'dollar_text_UI'"
+
+# ─── game.lua — ensure Hebrew language has rtl=true when set ─────────────────
+
+[[patch]]
+[patch.pattern]
+target = "game.lua"
+pattern = "G.LANG = G.LANGUAGES[G.SETTINGS.language"
+position = "after"
+payload = "    if G.LANG and G.SETTINGS.language == 'he' then G.LANG.rtl = true; G.LANG.skip_crt = true end"
