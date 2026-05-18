@@ -108,7 +108,7 @@ SMODS.Language({
     label = 'עברית',
     loc_key = 'en-us',
     font = {
-        file = mod_path .. 'fonts/BalatroHebrew.ttf',
+        file = 'BalatroHebrew.ttf',
         render_scale = 10,
         TEXT_HEIGHT_SCALE = 0.83,
         TEXT_OFFSET = {x = 10, y = -20},
