@@ -1,0 +1,10 @@
+{
+  "name": "HebrewBalatro",
+  "version_number": "1.0.1",
+  "website_url": "https://github.com/HenHat583/HebrewBalatro",
+  "description": "תרגום מלא לעברית עם RTL ופונט פיקסל | Full Hebrew RTL translation with custom pixel font",
+  "dependencies": [
+    "Thunderstore-lovely-0.9.0",
+    "Steamodded-Steamodded-0.9.8"
+  ]
+}
