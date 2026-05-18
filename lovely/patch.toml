@@ -69,12 +69,3 @@ position = "at"
 match_indent = true
 payload = "font = (G.LANG and G.LANG.rtl) and G.LANG.font or G.LANGUAGES['en-us'].font, shadow = true,spacing = 2, bump = true, scale = 2.2*scale}), id = 'dollar_text_UI'"
 
-# ─── game.lua — ensure Hebrew language has rtl=true when set ─────────────────
-
-[[patches]]
-[patches.pattern]
-target = "game.lua"
-pattern = "G.LANG = G.LANGUAGES[G.SETTINGS.language"
-position = "after"
-match_indent = true
-payload = "if G.LANG and G.SETTINGS.language == 'he' then G.LANG.rtl = true; G.LANG.skip_crt = true end"

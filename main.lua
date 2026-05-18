@@ -109,7 +109,7 @@ SMODS.Language({
     loc_key = 'en-us',
     font = {
         file = 'BalatroHebrew.ttf',
-        render_scale = 10,
+        render_scale = 200,
         TEXT_HEIGHT_SCALE = 0.83,
         TEXT_OFFSET = {x = 10, y = -20},
         FONTSCALE = 0.1,
