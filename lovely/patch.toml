@@ -9,4 +9,4 @@ target = "functions/UI_definitions.lua"
 pattern = "font = G.LANGUAGES['en-us'].font, shadow = true,spacing = 2, bump = true, scale = 2.2*scale}), id = 'dollar_text_UI'"
 position = "at"
 match_indent = true
-payload = "font = (G.LANG and G.LANG.rtl) and G.LANG.font or G.LANGUAGES['en-us'].font, shadow = true,spacing = 2, bump = true, scale = 2.2*scale}), id = 'dollar_text_UI'"
+payload = "font = (G.SETTINGS and G.SETTINGS.language == 'he' and G.LANG) and G.LANG.font or G.LANGUAGES['en-us'].font, shadow = true,spacing = 2, bump = true, scale = 2.2*scale}), id = 'dollar_text_UI'"

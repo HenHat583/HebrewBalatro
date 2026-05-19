@@ -85,20 +85,6 @@ function HebrewBalatro_localize_display_text(text, lang)
     return table.concat(out)
 end
 
--- ─── Patch localize() for RTL segment reversal ───────────────────────────────
-
-local _orig_localize = localize
-function localize(args, misc_cat)
-    local result = _orig_localize(args, misc_cat)
-    if G and G.LANG and G.LANG.rtl and type(result) == 'table' and #result > 1 then
-        local n = #result
-        for i = 1, math.floor(n / 2) do
-            result[i], result[n - i + 1] = result[n - i + 1], result[i]
-        end
-    end
-    return result
-end
-
 -- ─── Register Hebrew language ─────────────────────────────────────────────────
 
 local mod_path = SMODS.current_mod.path
@@ -126,16 +112,8 @@ SMODS.Language({
 local function patch_he_lang()
     if G and G.LANGUAGES and G.LANGUAGES['he'] then
         local L = G.LANGUAGES['he']
-        L.rtl = true
         L.skip_crt = true
         L.button = 'משוב על תרגום'
-        L.warning = {
-            {
-                btn = 'אישור',
-                text_1 = 'תרגום עברי',
-                text_2 = 'גרסת בטא',
-            }
-        }
     end
 end
 
