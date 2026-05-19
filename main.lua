@@ -104,6 +104,7 @@ SMODS.Language({
         min_filter = 'nearest',
         mag_filter = 'nearest',
         hinting = 'mono',
+        use_native_text = false,
     },
 })
 
