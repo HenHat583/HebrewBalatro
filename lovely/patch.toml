@@ -1,64 +1,6 @@
 [manifest]
 version = "1.0.0"
 
-# ─── engine/text.lua — inject RTL display_string ─────────────────────────────
-
-[[patches]]
-[patches.pattern]
-target = "engine/text.lua"
-pattern = "local old_string = self.strings[k].string"
-position = "after"
-match_indent = true
-payload = "local display_string = HebrewBalatro_localize_display_text and HebrewBalatro_localize_display_text(new_string, G.LANG) or new_string"
-
-[[patches]]
-[patches.pattern]
-target = "engine/text.lua"
-pattern = "if old_string ~= new_string or first_pass then"
-position = "at"
-match_indent = true
-payload = "if old_string ~= display_string or first_pass then"
-
-[[patches]]
-[patches.pattern]
-target = "engine/text.lua"
-pattern = "self.strings[k].string = new_string"
-position = "at"
-match_indent = true
-payload = "self.strings[k].string = display_string"
-
-[[patches]]
-[patches.pattern]
-target = "engine/text.lua"
-pattern = "local let_tab = {letter = love.graphics.newText(self.font.FONT, new_string), char = new_string,"
-position = "at"
-match_indent = true
-payload = "local let_tab = {letter = love.graphics.newText(self.font.FONT, display_string), char = display_string,"
-
-[[patches]]
-[patches.pattern]
-target = "engine/text.lua"
-pattern = "local tx = self.font.FONT:getWidth(new_string)*self.scale*part_scale*G.TILESCALE*self.font.FONTSCALE"
-position = "at"
-match_indent = true
-payload = "local tx = self.font.FONT:getWidth(display_string)*self.scale*part_scale*G.TILESCALE*self.font.FONTSCALE"
-
-[[patches]]
-[patches.pattern]
-target = "engine/text.lua"
-pattern = "local ty = self.font.FONT:getHeight(new_string)*self.scale*part_scale*G.TILESCALE*self.font.FONTSCALE*self.font.TEXT_HEIGHT_SCALE"
-position = "at"
-match_indent = true
-payload = "local ty = self.font.FONT:getHeight(display_string)*self.scale*part_scale*G.TILESCALE*self.font.FONTSCALE*self.font.TEXT_HEIGHT_SCALE"
-
-[[patches]]
-[patches.pattern]
-target = "engine/text.lua"
-pattern = "for _, c in utf8.chars(new_string) do"
-position = "at"
-match_indent = true
-payload = "for _, c in utf8.chars(display_string) do"
-
 # ─── functions/UI_definitions.lua — money display uses RTL font ───────────────
 
 [[patches]]
@@ -68,4 +10,3 @@ pattern = "font = G.LANGUAGES['en-us'].font, shadow = true,spacing = 2, bump = t
 position = "at"
 match_indent = true
 payload = "font = (G.LANG and G.LANG.rtl) and G.LANG.font or G.LANGUAGES['en-us'].font, shadow = true,spacing = 2, bump = true, scale = 2.2*scale}), id = 'dollar_text_UI'"
-
