@@ -1,6 +1,6 @@
 {
   "name": "HebrewBalatro",
-  "version_number": "1.0.1",
+  "version_number": "1.0.8",
   "website_url": "https://github.com/HenHat583/HebrewBalatro",
   "description": "תרגום מלא לעברית עם RTL ופונט פיקסל | Full Hebrew RTL translation with custom pixel font",
   "dependencies": [

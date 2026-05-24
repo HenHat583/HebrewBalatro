@@ -1,12 +1,7 @@
 [manifest]
 version = "1.0.0"
 
-# ─── functions/UI_definitions.lua — money display uses RTL font ───────────────
-
-[[patches]]
-[patches.pattern]
-target = "functions/UI_definitions.lua"
-pattern = "font = G.LANGUAGES['en-us'].font, shadow = true,spacing = 2, bump = true, scale = 2.2*scale}), id = 'dollar_text_UI'"
-position = "at"
-match_indent = true
-payload = "font = (G.SETTINGS and G.SETTINGS.language == 'he' and G.LANG) and G.LANG.font or G.LANGUAGES['en-us'].font, shadow = true,spacing = 2, bump = true, scale = 2.2*scale}), id = 'dollar_text_UI'"
+# No Lovely patches required. Hebrew rendering is handled entirely by
+# LOVE's HarfBuzz text shaping via `use_native_text = true` on the
+# registered font (see main.lua). Cosmetic money-font patch was removed
+# because it depended on other community patches being applied first.
