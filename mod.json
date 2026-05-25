@@ -5,6 +5,6 @@
   "description": "Full Hebrew (RTL) translation for Balatro. Requires Steamodded + Lovely Injector.",
   "prefix": "heb",
   "main_file": "main.lua",
-  "version": "1.0.8",
+  "version": "1.0.9",
   "minimum_steamodded_version": "0.9.8"
 }

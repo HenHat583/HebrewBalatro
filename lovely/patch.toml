@@ -1,7 +1,0 @@
-[manifest]
-version = "1.0.0"
-
-# No Lovely patches required. Hebrew rendering is handled entirely by
-# LOVE's HarfBuzz text shaping via `use_native_text = true` on the
-# registered font (see main.lua). Cosmetic money-font patch was removed
-# because it depended on other community patches being applied first.
